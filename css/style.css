@@ -1,0 +1,791 @@
+/* =========================================================
+   DASS HIGH SCHOOL - style.css
+   HTML / CSS / Vanilla JS のみで構成された静的サイト用CSS
+   ========================================================= */
+
+:root {
+  /* ---- Colors ---- */
+  --white: #ffffff;
+  --sky: #eaf4fb;       /* 薄い水色 */
+  --sky-deep: #cfe8f7;  /* 水色（少し濃い） */
+  --blue: #1f6fb2;      /* ブルー */
+  --blue-dark: #14568f; /* ブルー(hover用) */
+  --navy: #0b2d4e;      /* 濃いネイビー */
+  --navy-deep: #071c33; /* さらに濃いネイビー(背景用) */
+  --ink: #1c2b3a;       /* 本文テキスト */
+  --muted: #5c7186;     /* 補助テキスト */
+  --line: #e1e9f0;      /* 罫線・境界 */
+
+  /* ---- Layout ---- */
+  --header-h: 72px;
+  --container-w: 1120px;
+  --radius: 14px;
+
+  /* ---- Font ---- */
+  --font-jp: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+}
+
+/* ---------- Reset ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-jp);
+  color: var(--ink);
+  background: var(--white);
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  word-break: break-word;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; margin: 0; padding: 0; }
+h1, h2, h3, h4, p { margin: 0; }
+button { font-family: inherit; }
+
+/* すべてのアンカー先セクションが sticky header に隠れないための余白 */
+section[id] { scroll-margin-top: var(--header-h); }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.sp-only { display: none; }
+
+.container {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+  background: var(--blue);
+  color: var(--white);
+  box-shadow: 0 8px 20px rgba(31, 111, 178, 0.25);
+}
+.btn-primary:hover { background: var(--blue-dark); }
+
+.btn-outline-light {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.btn-outline-light:hover { background: rgba(255, 255, 255, 0.2); }
+
+.btn-cta {
+  background: var(--navy);
+  color: var(--white);
+  padding: 11px 22px;
+  font-size: 0.85rem;
+}
+.btn-cta:hover { background: var(--blue); }
+
+/* ---------- Section heading common ---------- */
+.section-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--blue);
+  margin-bottom: 12px;
+}
+.section-eyebrow-light { color: var(--sky-deep); }
+
+.section-title {
+  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+  font-weight: 900;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  margin-bottom: 28px;
+}
+
+.section-lead {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 640px;
+  margin-bottom: 40px;
+}
+
+.cross {
+  color: var(--blue);
+  font-weight: 700;
+  margin: 0 6px;
+}
+
+/* ---------- Reveal animation (JS toggles .in-view) ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+/* 備考: backdrop-filter は position:fixed の子要素(モバイルメニュー)の
+   containing block を書き換えてしまうため、あえて使用しない */
+.header-inner {
+  width: 100%;
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-mark { flex-shrink: 0; }
+.logo-text {
+  font-weight: 900;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  color: var(--navy);
+  letter-spacing: 0.03em;
+}
+.logo-text-sub {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--blue);
+}
+
+.global-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.global-nav ul {
+  display: flex;
+  gap: 26px;
+}
+.nav-link {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--navy);
+  position: relative;
+  padding: 6px 0;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 2px;
+  background: var(--blue);
+  transition: width 0.2s ease;
+}
+.nav-link:hover::after { width: 100%; }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.nav-toggle span {
+  width: 100%;
+  height: 2px;
+  background: var(--navy);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: flex-end;
+  color: var(--white);
+  overflow: hidden;
+}
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 28, 51, 0.35) 0%, rgba(7, 28, 51, 0.35) 45%, rgba(7, 28, 51, 0.88) 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding: 0 24px 72px;
+}
+.hero-eyebrow {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--sky-deep);
+  margin-bottom: 18px;
+}
+.hero-title {
+  font-size: clamp(1.9rem, 5vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+.hero-formula {
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--sky);
+}
+.hero-tagline {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 36px;
+  line-height: 1.9;
+}
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* =========================================================
+   CONCEPT
+   ========================================================= */
+.concept { padding: 110px 0 0; }
+.concept-text {
+  max-width: 720px;
+  margin-bottom: 44px;
+}
+.concept-text p { margin-bottom: 20px; color: var(--ink); }
+.concept-highlight {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--navy);
+  border-left: 4px solid var(--blue);
+  padding-left: 18px;
+  margin-top: 30px !important;
+}
+
+.concept-formula {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 28px 26px;
+  background: var(--sky);
+  border-radius: var(--radius);
+  font-weight: 700;
+  color: var(--navy);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  margin-bottom: 90px;
+}
+
+/* ---- 6つの力 ---- */
+.abilities {
+  background: var(--navy);
+  padding: 80px 0 96px;
+}
+.abilities-title {
+  color: var(--white);
+  font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 48px;
+}
+.ability-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.ability-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 30px 26px;
+}
+.ability-num {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--sky-deep);
+  opacity: 0.85;
+  line-height: 1;
+  margin-bottom: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.ability-name {
+  color: var(--white);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.ability-desc {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.88rem;
+  line-height: 1.85;
+}
+
+/* =========================================================
+   3 YEARS
+   ========================================================= */
+.three-years { padding: 110px 0; background: var(--white); }
+.years-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.year-card {
+  background: var(--sky);
+  border-radius: var(--radius);
+  padding: 34px 28px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.year-label {
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: var(--blue);
+  margin-bottom: 16px;
+}
+.year-copy {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.year-detail {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 22px;
+  flex-grow: 1;
+}
+.year-trip {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 14px 18px;
+  border: 1px solid var(--sky-deep);
+}
+.year-trip-term {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 4px;
+}
+.year-trip-place {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+/* =========================================================
+   MONTREAL
+   ========================================================= */
+.montreal {
+  background: var(--navy-deep);
+  color: var(--white);
+  padding-bottom: 110px;
+}
+.montreal-media {
+  width: 100%;
+  height: min(62vw, 560px);
+  min-height: 320px;
+  overflow: hidden;
+  margin-bottom: 60px;
+}
+.montreal-img-main {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.montreal .section-title { color: var(--white); }
+.montreal .section-lead { color: rgba(255, 255, 255, 0.75); }
+
+.montreal-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 20px;
+}
+.montreal-points li {
+  padding: 22px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+.montreal-points li:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
+.montreal-points h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--sky-deep);
+  margin-bottom: 8px;
+}
+.montreal-points p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+.montreal-photo {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.montreal-img-sub {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 5;
+}
+
+/* =========================================================
+   RESULTS
+   ========================================================= */
+.results { padding: 110px 0; }
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.results-col {
+  background: var(--sky);
+  border-radius: var(--radius);
+  overflow: hidden;
+  padding-bottom: 8px;
+}
+.results-col-head {
+  position: relative;
+}
+.results-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.results-col-head h3 {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--navy);
+  padding: 22px 28px 6px;
+}
+.results-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 28px;
+  border-top: 1px solid rgba(11, 45, 78, 0.08);
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 0.95rem;
+}
+.results-list li span {
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+}
+.results-list-global li { font-family: inherit; }
+
+/* =========================================================
+   FEE
+   ========================================================= */
+.fee { padding: 110px 0; background: var(--sky); }
+.fee-table-wrap { overflow: visible; }
+.fee-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(11, 45, 78, 0.06);
+}
+.fee-table thead th {
+  background: var(--navy);
+  color: var(--white);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: left;
+  padding: 16px 20px;
+}
+.fee-table tbody th,
+.fee-table tbody td {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+.fee-table tbody th {
+  color: var(--navy);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.fee-table tbody td { color: var(--muted); }
+.fee-table tbody td small { color: var(--muted); font-size: 0.78rem; }
+.fee-amount {
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: var(--blue);
+  white-space: nowrap;
+}
+.fee-amount small { font-size: 0.7rem; font-weight: 700; margin-left: 2px; }
+.fee-total { background: var(--sky); }
+.fee-total th, .fee-total td { border-bottom: none; }
+.fee-total .fee-amount { color: var(--navy); font-size: 1.3rem; }
+
+/* =========================================================
+   ADMISSION CTA
+   ========================================================= */
+.admission-cta {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  color: var(--white);
+  padding: 120px 0;
+  text-align: center;
+}
+.admission-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--sky-deep);
+  margin-bottom: 18px;
+}
+.admission-title {
+  font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+  font-weight: 900;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+.admission-cta .hero-buttons { justify-content: center; }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  background: var(--navy-deep);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 60px 0 32px;
+}
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  text-align: center;
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--white);
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
+}
+.footer-nav a {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.7);
+}
+.footer-nav a:hover { color: var(--white); }
+.footer-official {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--sky-deep);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 2px;
+}
+.footer-copyright {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 8px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+/* ---- Tablet ---- */
+@media (max-width: 900px) {
+  .ability-grid { grid-template-columns: repeat(2, 1fr); }
+  .montreal-grid { grid-template-columns: 1fr; }
+  .montreal-photo { order: -1; }
+  .montreal-img-sub { aspect-ratio: 16 / 9; }
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 680px) {
+  :root { --header-h: 64px; }
+
+  .container { padding: 0 20px; }
+
+  /* Header / nav */
+  .nav-toggle { display: flex; }
+  .global-nav {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--white);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 20px 24px 40px;
+    transform: translateX(100%);
+    transition: transform 0.28s ease;
+    overflow-y: auto;
+  }
+  .global-nav.is-open { transform: translateX(0); }
+  .global-nav ul {
+    flex-direction: column;
+    gap: 0;
+  }
+  .global-nav ul li { border-bottom: 1px solid var(--line); }
+  .nav-link { display: block; padding: 18px 4px; font-size: 1rem; }
+  .nav-cta { margin-top: 20px; width: 100%; padding: 16px; }
+
+  /* Hero */
+  .hero { min-height: 100vh; align-items: flex-end; }
+  .hero-content { padding: 0 20px 56px; }
+  .hero-title { font-size: 1.7rem; line-height: 1.5; }
+  .hero-formula { font-size: 1.05rem; }
+  .hero-tagline { font-size: 0.9rem; margin-bottom: 28px; }
+  .hero-buttons { flex-direction: column; align-items: stretch; }
+  .hero-buttons .btn { width: 100%; }
+
+  .sp-only { display: inline; }
+
+  /* Section spacing */
+  .concept { padding-top: 72px; }
+  .three-years,
+  .results,
+  .fee { padding: 72px 0; }
+  .admission-cta { padding: 80px 0; }
+  .montreal { padding-bottom: 72px; }
+  .section-title { margin-bottom: 22px; }
+  .section-lead { margin-bottom: 28px; }
+
+  /* Concept */
+  .concept-formula {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 24px 20px;
+    margin-bottom: 60px;
+  }
+  .concept-formula .cross { display: none; }
+
+  /* Abilities */
+  .abilities { padding: 56px 0 64px; }
+  .ability-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  /* 3 years */
+  .years-row { grid-template-columns: 1fr; gap: 18px; }
+
+  /* Montreal */
+  .montreal-media { height: 46vh; min-height: 220px; margin-bottom: 40px; }
+
+  /* Results */
+  .results-grid { grid-template-columns: 1fr; gap: 22px; }
+  .results-list li { flex-wrap: wrap; }
+
+  /* Fee table -> stacked cards (no horizontal scroll) */
+  .fee-table thead { display: none; }
+  .fee-table, .fee-table tbody, .fee-table tr, .fee-table th, .fee-table td {
+    display: block;
+    width: 100%;
+  }
+  .fee-table tr {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .fee-table tbody th { padding: 0 0 6px; font-size: 1rem; }
+  .fee-table tbody td {
+    padding: 4px 0 0;
+    border-bottom: none;
+  }
+  .fee-table tbody td[data-label="含まれるもの"]::before {
+    content: "含まれるもの：";
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .fee-total { border-radius: 10px; }
+
+  /* Admission */
+  .admission-cta .hero-buttons { flex-direction: column; }
+  .admission-cta .btn { width: 100%; }
+
+  /* Footer */
+  .footer-nav { gap: 14px 20px; }
+}
