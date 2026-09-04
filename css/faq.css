@@ -1,0 +1,349 @@
+/* DASS HIGH SCHOOL FAQ
+   FAQページ専用。既存の proposal.css は変更せず、#dass-highschool-faq 以下だけに限定。 */
+
+#dass-highschool-faq.dhfaq-theme {
+  --dhfaq-bg: #fffdf7;
+  --dhfaq-bg-alt: #f8fbff;
+  --dhfaq-accent: #2baebc;
+  --dhfaq-accent-2: #3bafda;
+  --dhfaq-link: #126572;
+  --dhfaq-cta: #ff8a5b;
+  --dhfaq-ink: #17324d;
+  --dhfaq-soft: #4b617a;
+  --dhfaq-line: #e3ece9;
+  --dhfaq-font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+    "Noto Sans JP", "Segoe UI", -apple-system, BlinkMacSystemFont,
+    "Helvetica Neue", Arial, sans-serif;
+
+  color: var(--dhfaq-ink);
+  background: var(--dhfaq-bg);
+  font-family: var(--dhfaq-font);
+  font-size: 1rem;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+#dass-highschool-faq *,
+#dass-highschool-faq *::before,
+#dass-highschool-faq *::after {
+  box-sizing: border-box;
+}
+
+#dass-highschool-faq a {
+  color: inherit;
+}
+
+#dass-highschool-faq a:focus-visible,
+#dass-highschool-faq summary:focus-visible {
+  outline: 3px solid var(--dhfaq-link);
+  outline-offset: 4px;
+}
+
+#dass-highschool-faq .dhfaq-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+#dass-highschool-faq h1,
+#dass-highschool-faq h2 {
+  font-family: var(--dhfaq-font);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+
+#dass-highschool-faq p {
+  margin: 0 0 1em;
+}
+
+#dass-highschool-faq .dhfaq-hero {
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  padding: 60px 0;
+  background: #edf3f4 url("../images/montreal-faq.jpg") center / cover no-repeat;
+}
+
+#dass-highschool-faq .dhfaq-hero-card {
+  max-width: 680px;
+  padding: 40px 44px;
+  background: rgba(255, 253, 247, .94);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(23, 50, 77, .10);
+}
+
+#dass-highschool-faq .dhfaq-eyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 6px 14px;
+  color: var(--dhfaq-link);
+  background: #eaf8fa;
+  border-radius: 999px;
+  font-size: .875rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+
+#dass-highschool-faq .dhfaq-hero h1 {
+  margin: 0 0 .5em;
+  font-size: 1.9rem;
+}
+
+#dass-highschool-faq .dhfaq-hero p {
+  margin: 0;
+  color: var(--dhfaq-soft);
+  font-size: 1.05rem;
+}
+
+#dass-highschool-faq .dhfaq-body {
+  padding-block: 80px;
+}
+
+#dass-highschool-faq .dhfaq-group {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  scroll-margin-top: 110px;
+}
+
+#dass-highschool-faq .dhfaq-group:last-of-type {
+  margin-bottom: 0;
+}
+
+#dass-highschool-faq .dhfaq-group-title {
+  margin: 0 0 16px;
+  color: var(--dhfaq-link);
+  font-size: 1.1rem;
+}
+
+#dass-highschool-faq .dhfaq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#dass-highschool-faq .dhfaq-item {
+  padding: 6px 24px;
+  background: #fff;
+  border: 1px solid var(--dhfaq-line);
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(23, 50, 77, .05);
+  scroll-margin-top: 110px;
+}
+
+#dass-highschool-faq .dhfaq-question {
+  position: relative;
+  padding: 18px 30px 18px 0;
+  cursor: pointer;
+  font-family: var(--dhfaq-font);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.8;
+  list-style: none;
+  overflow-wrap: anywhere;
+}
+
+#dass-highschool-faq .dhfaq-question::-webkit-details-marker {
+  display: none;
+}
+
+#dass-highschool-faq .dhfaq-question::marker {
+  content: "";
+}
+
+#dass-highschool-faq .dhfaq-icon {
+  position: absolute;
+  top: 22px;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--dhfaq-link);
+  transition: transform .2s ease;
+}
+
+#dass-highschool-faq .dhfaq-icon::before,
+#dass-highschool-faq .dhfaq-icon::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 1px;
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+}
+
+#dass-highschool-faq .dhfaq-icon::after {
+  transform: rotate(90deg);
+}
+
+#dass-highschool-faq .dhfaq-item[open] .dhfaq-icon {
+  transform: rotate(45deg);
+}
+
+#dass-highschool-faq .dhfaq-answer {
+  padding-bottom: 18px;
+  color: var(--dhfaq-soft);
+  font-size: 1rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+#dass-highschool-faq .dhfaq-answer p {
+  margin: 0;
+}
+
+#dass-highschool-faq .dhfaq-answer p + p {
+  margin-top: 1em;
+}
+
+#dass-highschool-faq .dhfaq-answer .dhfaq-note {
+  font-size: .9375rem;
+}
+
+#dass-highschool-faq .dhfaq-reference {
+  color: var(--dhfaq-link);
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+#dass-highschool-faq .dhfaq-notice {
+  max-width: 900px;
+  margin: 28px auto 0;
+  padding: 18px 22px;
+  color: var(--dhfaq-soft);
+  background: var(--dhfaq-bg-alt);
+  border: 1px dashed var(--dhfaq-accent-2);
+  border-radius: 14px;
+  font-size: .9375rem;
+}
+
+#dass-highschool-faq .dhfaq-cta-section {
+  padding: 0 24px 80px;
+}
+
+#dass-highschool-faq .dhfaq-cta {
+  max-width: 1152px;
+  margin-inline: auto;
+  padding: 56px 32px;
+  color: var(--dhfaq-ink);
+  background: linear-gradient(135deg, var(--dhfaq-accent), var(--dhfaq-accent-2));
+  border-radius: 20px;
+  text-align: center;
+}
+
+#dass-highschool-faq .dhfaq-cta h2 {
+  max-width: 800px;
+  margin: 0 auto .6em;
+  font-size: 1.8rem;
+}
+
+#dass-highschool-faq .dhfaq-cta p {
+  max-width: 600px;
+  margin: 0 auto 28px;
+}
+
+#dass-highschool-faq .dhfaq-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  color: var(--dhfaq-ink);
+  background: var(--dhfaq-cta);
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+}
+
+#dass-highschool-faq .dhfaq-button:hover {
+  background: #ff9f43;
+}
+
+#dass-highschool-faq .dhfaq-cta .dhfaq-button {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+}
+
+@media (max-width: 48rem) {
+  #dass-highschool-faq .dhfaq-hero-card {
+    padding: 30px;
+  }
+
+  #dass-highschool-faq .dhfaq-hero h1 {
+    font-size: 1.7rem;
+  }
+
+  #dass-highschool-faq .dhfaq-body {
+    padding-block: 48px;
+  }
+
+  #dass-highschool-faq .dhfaq-cta-section {
+    padding-bottom: 48px;
+  }
+
+  #dass-highschool-faq .dhfaq-cta {
+    padding: 40px 24px;
+  }
+
+  #dass-highschool-faq .dhfaq-cta h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 25rem) {
+  #dass-highschool-faq .dhfaq-container {
+    padding-inline: 20px;
+  }
+
+  #dass-highschool-faq .dhfaq-item {
+    padding-inline: 18px;
+  }
+
+  #dass-highschool-faq .dhfaq-hero-card {
+    padding: 28px 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #dass-highschool-faq .dhfaq-icon {
+    transition: none;
+  }
+}
+
+@media print {
+  #dass-highschool-faq .dhfaq-cta-section {
+    display: none;
+  }
+
+  #dass-highschool-faq .dhfaq-hero {
+    min-height: auto;
+    padding: 0 0 24px;
+    background: none;
+  }
+
+  #dass-highschool-faq .dhfaq-hero-card {
+    max-width: none;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  #dass-highschool-faq .dhfaq-body {
+    padding: 0;
+  }
+
+  #dass-highschool-faq .dhfaq-item {
+    box-shadow: none;
+  }
+
+  #dass-highschool-faq .dhfaq-question {
+    break-after: avoid;
+  }
+
+  #dass-highschool-faq .dhfaq-icon {
+    display: none;
+  }
+}
