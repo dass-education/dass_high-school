@@ -63,7 +63,7 @@
   display: flex;
   align-items: center;
   padding: 60px 0;
-  background: #edf3f4 url("../images/montreal-faq.jpg") center / cover no-repeat;
+  background: #edf3f4 url("../images/montreal-faq.jpg?v=403f802840") center / cover no-repeat;
 }
 
 #dass-highschool-faq .dhfaq-hero-card {
